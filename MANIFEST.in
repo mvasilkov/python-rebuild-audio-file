@@ -1,0 +1,4 @@
+include raf/binary_dependencies/ffmpeg
+include raf/binary_dependencies/ffmpeg.exe
+include raf/binary_dependencies/flac
+include raf/binary_dependencies/flac.exe

@@ -1,0 +1,3 @@
+.vscode/
+__pycache__/
+rebuild_audio_file.egg-info/
