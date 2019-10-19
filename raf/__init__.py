@@ -11,7 +11,7 @@ import sys
 from tempfile import TemporaryDirectory
 
 from colorama import Back, Fore, Style
-from compare_mp3 import compare, SAME_FILE, SAME_WAV
+from compare_mp3 import compare, Result
 from mutagen.id3 import ID3
 from videoprops import get_audio_properties
 
@@ -104,7 +104,7 @@ def rebuild_audio_file(filename: str, copy: str):
         ID3(buf).delete()
         check_call([which_ffmpeg(), '-i', buf, *options, copy])
 
-    if compare(filename, copy, check_tags=False) not in (SAME_FILE, SAME_WAV):
+    if compare(filename, copy, check_tags=False) not in (Result.SAME_FILE, Result.SAME_WAV):
         print('---')
         print(f'{Back.BLACK}{Fore.RED}{Style.BRIGHT}Not lossless{Style.RESET_ALL}')
         raise RuntimeError('Not lossless')

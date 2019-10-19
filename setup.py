@@ -1,13 +1,17 @@
+from pathlib import Path
 from setuptools import find_packages, setup
+
+README = Path(__file__).resolve().parent / 'README.md'
 
 if __name__ == '__main__':
     setup(
         name='rebuild-audio-file',
 
-        version='0.1.0',
+        version='0.1.1',
 
         description='Losslessly rebuild audio files.',
-        long_description='Losslessly rebuild audio files.',
+        long_description=README.read_text(encoding='utf-8'),
+        long_description_content_type='text/markdown',
 
         url='https://github.com/mvasilkov/python-rebuild-audio-file',
 
@@ -32,8 +36,8 @@ if __name__ == '__main__':
 
         install_requires=[
             'colorama>=0.4.0',
-            'compare-mp3>=0.1.0',
-            'get-video-properties>=0.1.0',
+            'compare-mp3>=0.1.1',
+            'get-video-properties>=0.1.1',
             'mutagen>=1.41.1',
         ],
 
