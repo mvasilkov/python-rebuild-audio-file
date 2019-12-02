@@ -12,7 +12,7 @@ from tempfile import TemporaryDirectory
 
 from colorama import Back, Fore, Style
 from compare_mp3 import compare, Result
-from mutagen.id3 import ID3
+from mutagen.id3 import ID3, ID3NoHeaderError
 from videoprops import get_audio_properties
 
 ffmpeg_options = ('-c', 'copy', '-bitexact', '-map', '0:a:0', '-map_metadata', '-1', '-y')
@@ -101,7 +101,10 @@ def rebuild_audio_file(filename: str, copy: str):
         buf = tempdir + '/buf.mp3'
         copy_file(filename, buf)
         set_writable(buf)
-        ID3(buf).delete()
+        try:
+            ID3(buf).delete()
+        except ID3NoHeaderError:
+            print('doesn\'t start with an ID3 tag')
         check_call([which_ffmpeg(), '-i', buf, *options, copy])
 
     if compare(filename, copy, check_tags=False) not in (Result.SAME_FILE, Result.SAME_WAV):
@@ -119,7 +122,7 @@ def noexcept(fun):
     def wrapped(*args, **kwargs):
         try:
             return fun(*args, **kwargs)
-        except:
+        except Exception:
             pass
 
     return wrapped
